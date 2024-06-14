@@ -43,11 +43,11 @@
           <div class="p-0 bd-highlight">
               <a href='#'><img id='logo_superior_izquierdo' src="imagenes/logo_gms.png" width="120" height="auto" alt="Logo GMS"></a>
           </div>
-          <div class="p-3 bd-highlight" id="texttitleRegister">MÓDULO DE RADICACIÓN WEB PARA TRÁMITES CATASTRALES</div>
+          <div class="p-3 bd-highlight" id="texttitleRegister">MÓDULO DE GESTIÓN DE TRÁMITES CATASTRALES</div>
           <a href='#'><i class="fa-solid fa-user" id="labelusuario"></i><i class="fa fa-arrow-circle-left fa-2x" style="color: #32AB44" id="botonVolverreg" onclick="cerrarsesionT()"></i></a>
           
         </header>
-        <h6 class="tituloMorado">Listado de predios</h6>
+        <h6 class="tituloMorado">Listado de solicitudes</h6>
       </div>
 <!-- Menú que contiene los datos del colaborador -->
   <div class="container card">
@@ -78,88 +78,129 @@
     <div class="modal-dialog custom-modal-width" role="document">
         <!-- Modal content-->
         <div class="modal-content">
-           <!-- <form class="form-horizontal" method="post" action="principal/update_distancia.php" onsubmit="resetpass()"> -->
-            <form class="form-horizontal" method="post" action="">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Radicar trámite</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="cerrarModal()"><span aria-hidden="true">&times;</span>
-                    </button>
+          <div class="modal-header">
+            <h5 class="modal-title" id="tituloTramite">Gestionar trámite catastral</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="cerrarModal()"><span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="container card">
+            <form class="row g-3 needs-validation" novalidate>
+              <h6 class="modal-title" id="tituloTramite">Datos actuales en la base oficial</h6>
+              <div class="col-md-4 form-group">
+                <label for="formcedula">Cédula Propietario / Poseedor</label>
+                <input type="text" class="form-control" id="formcedula" name="formcedula" value="" disabled>
+                <!--<input type="text" class="form-control" id="formcedula" name="formcedula" value="">-->
+              </div>
+              <div class="col-md-4 form-group">
+                <label for="formcolaborador">Nombre del propietario/s</label>
+                <input type="text" class="form-control" id="formcolaborador" name="formcolaborador" value="" disabled>
+              </div>
+              <div class="col-md-4 form-group">
+                <label for="formnumeropredial">Número predial</label>
+                <input type="text" class="form-control" id="formnumeropredial" name="formnumeropredial" value="" disabled>
+              </div>
+              <div class="col-md-4 form-group">
+                <label for="formmatricula">Matricula Inmobiliaria</label>
+                <input type="text" class="form-control" id="formmatricula" name="formmatricula"  value="" disabled>
+              </div>
+              <div class="col-md-4 form-group">
+                <label for="formnupre">Nupre</label>
+                <input type="text" class="form-control" id="formnupre" name="formnupre" value="" disabled>
+              </div>
+              <div class="col-md-4 form-group">
+                <label for="formdireccion">Dirección</label>
+                <input type="text" class="form-control" id="formdireccion" name="formdireccion" value="" disabled>
+              </div>
+              <div class="col-md-4 form-group">
+                <label for="formareaterreno">Área de terreno</label>
+                <input type="text" class="form-control" id="formareaterreno" name="formareaterreno" value="" disabled>
+              </div>
+              <div class="col-md-4 form-group">
+                <label for="formdestinacioneco">Destinación económica</label>
+                <input type="text" class="form-control" id="formdestinacioneco" name="formdestinacioneco" value="" disabled>
+              </div>
+              <div class="col-md-4 form-group">
+                <label for="forminiciotenencia">Fecha de inicio tenencia</label>
+                <input type="text" class="form-control" id="forminiciotenencia" name="forminiciotenencia" value="" disabled>
+              </div>
+              <div class="col-md-4 form-group" id="formCertificadotradicion">
+                <label for="linkCertificadotradicion">Certificado de tradición:</label>
+                  <br><a href="http://127.0.0.1/tramitadorweb/visor/pdfs/certificado_de_tradicion/certificado_tradicion_y_libertad.pdf" id="linkCertificadotradicion" class="btn btn-outline-secondary btn-sm"  target="_blank" role="button" aria-disabled="true"><span class="fa fa-paperclip fa-lg" aria-hidden="true"></span>&nbsp; Ver archivo adjunto&nbsp;</a>
+              </div>
+              <div class="col-md-4 form-group" id="formEscritura">
+                <label for="linkEscritura">Escritura pública:</label>
+                <br><a href="http://127.0.0.1/tramitadorweb/visor/pdfs/escrituras/escritura_publica.pdf" id="linkEscritura" class="btn btn-outline-secondary btn-sm"  target="_blank" role="button" aria-disabled="true"><span class="fa fa-paperclip fa-lg" aria-hidden="true"></span>&nbsp; Ver archivo adjunto&nbsp;</a>
+              </div>    
+            </form>
+          </div>
+
+
+          <div class="container card">
+            <form class="row g-3 needs-validation" novalidate>
+              <h6 class="modal-title" id="tituloTramite">Ingrese los datos para actualizar la base</h6>
+              <div class="col-md-4 form-group">
+                <label for="formcedula">Número de documento</label>
+                <input type="text" class="form-control" id="formcedula" name="formcedula" value="">
+                <!--<input type="text" class="form-control" id="formcedula" name="formcedula" value="">-->
+              </div>
+              <div class="col-md-4 form-group">
+                <label for="formprimernombre">Primer Nombre</label>
+                <input type="text" class="form-control" id="formcolaborador" name="formcolaborador" value="" required>
+              </div>
+              <div class="col-md-4 form-group">
+                <label for="formsegundonombre">Segundo Nombre</label>
+                <input type="text" class="form-control" id="formsegundonombre" name="formsegundonombre" value="" required>
+              </div>
+              <div class="col-md-4 form-group">
+                <label for="formprimerapellido">Primer Apellido</label>
+                <input type="text" class="form-control" id="formprimerapellido" name="formprimerapellido"  value="" required>
+              </div>
+              <div class="col-md-4 form-group">
+                <label for="formsegundoapellido">Segundo Apellido</label>
+                <input type="text" class="form-control" id="formsegundoapellido" name="formsegundoapellido" value="" required>
+              </div>
+              <div class="col-md-4 form-group">
+                <label for="formtipotenencia">Tipo de Tenencia</label>
+                <input type="text" class="form-control" id="formtipotenencia" name="formtipotenencia" value="" required>
+              </div>
+              <div class="col-md-4 form-group">
+                <label for="formfraccionderecho">Fracción de derecho</label>
+                <input type="text" class="form-control" id="formfraccionderecho" name="formfraccionderecho" value="" required>
+              </div>
+              <div class="col-md-4 form-group">
+                <label for="fechainiciotenenciaN">Fecha de Inicio Tenencia</label>
+                <input type="date" class="form-control" id="fechainiciotenenciaN" name="fechainiciotenenciaN" required>
+                <div class="valid-feedback">
                 </div>
-                <div class="modal-body">
-                    <div class="control-group">
-                        <label class="control-label">Trámite:</label>
-                        <div class="col-md-12">
-                          <select id="gtramites" name="gtramites" class="form-control" onchange="selectMutacion()">
-                            <option value="seleccione" selected disabled>Seleccione...</option>
-                            <option value="cambiopropietario">Cambio de propietario o poseedor (mutación de primera clase)</option>
-                            <option value="agregacionsegregacion">Agregación / Segregación (mutación de segunda clase)</option>
-                            <option value="nuevasedificaciones">Nuevas edificaciones, construcciones o demoliciones (mutación de tercera clase)</option>
-                            <option value="afectacionavaluo">Afectación en avalúos catastrales (mutación de cuarta clase)</option>
-                            <option value="inscripcionpredios">Inscripción de predios o mejoras (mutación de quinta clase)</option>
-                            <option value="certificadocatastral">Descargar certificado catastral</option>
-                          </select>
-                        </div>
-                        <!--<label class="control-label">Seleccione la plano:</label>
-                        <div id="seglist" style="display:none;" class="col-md-12">
-                          <select id="gpdf" name="gpdf" class="form-control">
-                          </select>
-                        </div>-->
-
-                        <br><label for="file" class="custum-file-upload" id="adjtradicion">
-                            <div class="text">
-                               <span><i class="fa-solid fa-upload fa-paperclip"></i>&nbsp;&nbsp;Copia del certificado de tradición y libertad</span>
-                            </div>
-                            <input id="file" type="file">
-                        </label>
-
-                        <br><label for="file" class="custum-file-upload" id="adjescritura">
-                            <div class="text">
-                               <span><i class="fa-solid fa-upload fa-paperclip"></i>&nbsp;&nbsp;Copia de la escritura pública</span>
-                            </div>
-                            <input id="file" type="file">
-                        </label>
-
-                        <br><label for="file" class="custum-file-upload" id="adjplanocuraduria">
-                          <div class="text">
-                             <span><i class="fa-solid fa-upload fa-paperclip"></i>&nbsp;&nbsp;Copia del plano aprobado por la curaduría o la Secretaría de Planeación</span>
-                          </div>
-                          <input id="file" type="file">
-                        </label>
-
-                        <br><label for="file" class="custum-file-upload" id="adjlicenciaconstruccion">
-                          <div class="text">
-                             <span><i class="fa-solid fa-upload fa-paperclip"></i>&nbsp;&nbsp;Copia de la licencia de construcción</span>
-                          </div>
-                          <input id="file" type="file">
-                        </label>
-
-                        <br><label for="file" class="custum-file-upload" id="adjotros">
-                          <div class="text">
-                             <span><i class="fa-solid fa-upload fa-paperclip"></i>&nbsp;&nbsp;Copia de planos, aerofotografías, avalúos comerciales, etc.</span>
-                          </div>
-                          <input id="file" type="file">
-                        </label>
-
-                        </div>
-                      </div>    
-                    <div class="modal-footer">
-                    <!--<button type="button" class="btn btn-outline-success" data-backdrop="false" data-dismiss="modal" onclick="generarmapa()">Ver en Visor</button>-->
-
-                    <button class="btn btn-danger botonFormdevolver" id="botradicarMutacion" name="botradicarMutacion" type="button" onclick="uploadFile()">Solicitar</button>
+              </div>  
+              <div class="col-md-4 form-group">
+                <label for="formObservaciones">Observaciones</label>
+                <input type="text" class="form-control" id="formObservaciones" name="formObservaciones" value="">
+              </div> 
+              <button class="btn btn-danger botonFormdevolver" id="bottramitarMutacion" name="bottramitarMutacion" type="button" onclick="uploadFile()">Aprobar</button>
                     
                     <button class="btn btn-primary botonFormenviar d-none" id="botonGuardando" name="botonGuardando" type="button" disabled>
                       <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                       Enviando...
-                    </button>
-
-
-
-                </div>
-              </div>
+                    </button>  
             </form>
+          </div>         
         </div>
-    </div>
-  </div>
+    </div>    
+
+
+
+    <!--<div class="modal-footer">
+                    
+                    <button class="btn btn-danger botonFormdevolver" id="botradicarMutacion" name="botradicarMutacion" type="button" onclick="uploadFile()">Solicitar</button>
+                    <button class="btn btn-primary botonFormenviar d-none" id="botonGuardando" name="botonGuardando" type="button" disabled>
+                      <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                      Enviando...
+                    </button>             
+    </div>-->
+</div>
+            
+      
 
 
 
@@ -175,7 +216,7 @@
                     </button>
                 </div>
               <div class="modal-body">
-                <iframe id="visor" style="width: 100%; height: 500px;"></iframe>      
+                <iframe id="visor" style="width: 200%; height: 500px;"></iframe>      
               </div>
             </form>
         </div>

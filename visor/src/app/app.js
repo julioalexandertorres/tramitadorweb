@@ -316,7 +316,7 @@ map.on('singleclick', function (evt) {
                 //if (tamañopantalla == true) {
                     //putgif();
                 //} else {
-                    document.getElementById("carga2").style.display = "block";
+                    //document.getElementById("carga2").style.display = "block";
                 //}
             },
             success: function (data) {
@@ -334,7 +334,20 @@ map.on('singleclick', function (evt) {
                     var transf = [values.latitud, values.longitud, 0];
                     var uebaunitlcterreno= select_query("select * from valparaiso.col_uebaunit where ue_lc_terreno = '"+values.t_id+"'");                             
                     var baunit = uebaunitlcterreno[0][7];
-                    var datoslcpredio = select_query("select * from valparaiso.lc_predio where t_id = '"+uebaunitlcterreno[0][7]+"'");           
+                    var datoslcpredio = select_query("select * from valparaiso.lc_predio where t_id = '"+uebaunitlcterreno[0][7]+"'");
+                    var datoslcderecho = select_query("SELECT * FROM valparaiso.lc_derecho where unidad = '"+uebaunitlcterreno[0][7]+"'");
+                               
+                    if(datoslcderecho[0][6].length > 0){
+                       var datosinteresados = select_query("SELECT * FROM valparaiso.lc_interesado where t_id = '"+datoslcderecho[0][6]+"'");
+                       var propietarios = datosinteresados[0][5] + " " + datosinteresados[0][6] + " " + datosinteresados[0][7] + " " + datosinteresados[0][8];
+                       var cedula = datosinteresados[0][4];
+                    }
+                    else{
+                        var propietarios = select_query("SELECT nombre FROM valparaiso.lc_agrupacioninteresados where t_id = '"+datoslcderecho[0][7]+"'");
+                        var cedula = "Sin Información";
+                    }
+                    //console.log(baunit);
+                    //console.log(datoslcinteresado);
                     try{
                         var direccion = datoslcpredio[0][21];
                         var idoperacion = datoslcpredio[0][4];
@@ -368,11 +381,12 @@ map.on('singleclick', function (evt) {
                     select[5] = "<b>Área de Terreno: </b>";
                     select[6] = "<b>Condición del predio: </b>"; 
                     select[7] = "<b>Destinación económica: </b>";
-                    select[8] = "<b>Comienzo vida útil: </b>";
-                    select[9] = "<b>Baunit: </b>";
-                    select[10] = "<b>Fotografía: </b>";
-                    select[11] = "<b>Ver marcas: </b>";
-                    select[12] = "<b>Agregar marcas: </b>";
+                    select[8] = "<b>Interesado: </b>";
+                    select[9] = "<b>Cédula: </b>";
+                    /*select[10] = "<b>Fotografía: </b>";*/
+                    select[10] = "<b>Ver marcas: </b>";
+                    select[11] = "<b>Agregar marcas: </b>";
+                    
                     
 
                     sel[0] = direccion;
@@ -383,27 +397,28 @@ map.on('singleclick', function (evt) {
                     sel[5] = parseInt(values.area_terreno) + " m2";
                     sel[6] = condicionpredio;
                     sel[7] = desteconomica;
-                    sel[8] = comienzovidautil;  
-                    sel[9] = baunit;         
-                    stv[10] = document.createElement("a");
+                    sel[8] = propietarios;  
+                    sel[9] = cedula;         
+                    /*stv[10] = document.createElement("a");
                     stv[10].setAttribute("onclick", "open_ficha("+ values.gid+")");
                     ig[10] = document.createElement("img");
                     ig[10].style = "cursor:pointer";
-                    ig[10].src = "./imagenes/carta.png";
-                    sel[11] = "<i class='fa fa-solid fa-folder-open fa-2x' style='color: #FCB314; cursor: pointer;' onclick='vermarca("+tidlcterreno+")'><i/>";
-                    sel[12] = "<i class='fa fa-solid fa-circle-plus fa-2x' style='color: #FCB314; cursor: pointer;' onclick='agregarmarca("+tidlcterreno+")'><i/>";
+                    ig[10].src = "./imagenes/carta.png";*/
+                    sel[10] = "<i class='fa fa-solid fa-folder-open fa-2x' style='color: #FCB314; cursor: pointer;' onclick='vermarca("+tidlcterreno+")'><i/>";
+                    sel[11] = "<i class='fa fa-solid fa-circle-plus fa-2x' style='color: #FCB314; cursor: pointer;' onclick='agregarmarca("+tidlcterreno+")'><i/>";
+                     
                     
                     for (i = 0; i < select.length; i++) {
                         row = table.insertRow(i);
                         cell1 = row.insertCell(0);
                         cell2 = row.insertCell(1);
                         cell1.innerHTML = select[i];
-                        if (i === 10) {
+                        /*if (i === 10) {
                             cell2.appendChild(stv[i]);
                             stv[i].appendChild(ig[i]);
-                        } else {
+                        } else {*/
                             cell2.innerHTML = sel[i];
-                        }
+                        /*}*/
                     }     
                         document.getElementById("panel_atr").style.display = "block";
                         var c = feature.values_.geometria.flatCoordinates.length - 1;
@@ -472,7 +487,7 @@ map.on('singleclick', function (evt) {
                 //if (tamañopantalla === true) {
                     //quitgif();
                 //} else {
-                    document.getElementById("carga2").style.display = "none";
+                    //document.getElementById("carga2").style.display = "none";
                 //}
             }
         });

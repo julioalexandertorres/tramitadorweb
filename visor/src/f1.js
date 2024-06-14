@@ -75,17 +75,21 @@ try{
                 '<i class="fa-solid fa-location-dot fa-2x" style="color: #32AB44"></i>',
                 '</a>',
                 '&nbsp;&nbsp;<a href="javascript:void(0)" class="newT" title="Radicar Trámite">',
-                '<i class="fa-solid fa-folder-plus fa-2x" style="color: #32AB44"></i>',
+                '<i class="fa-solid fa-folder-open fa-2x" style="color: #32AB44"></i>',
                 '</a>',
             ].join("");
         },
         events: {
             "click .verInfo": function (e, value, row, index) {
-              //console.log(row[1]);
-              document.getElementById('visor').src = "visor.html?prediosel="+row[1]+"";
-              $('#mostrarMapa').modal("show");
+              console.log(row[3]);
+              var lcterreno = select_query("select ue_lc_terreno from valparaiso.col_uebaunit where baunit = "+row[3]+" and ue_lc_terreno is not null");
+              //console.log(lcterreno);
+              window.open('http://127.0.0.1/tramitadorweb/visor/visor.html?prediosel='+lcterreno+'', '_blank');
+              //document.getElementById('visor').src = "visor.html?prediosel="+lcterreno+"";
+              //$('#mostrarMapa').modal("show");
             },
             "click .newT": function (e, value, row, index) {
+              llenarDatosactuales(row[3]);
               $('#generartramite').modal("show");     
           }
         }
@@ -3596,31 +3600,15 @@ function exportexcel(){
         var resultados = document.getElementById('table');
         resultados.innerHTML = '';
         table = [];
-        var datostablas = [['Número Predial'], ['t_id_lc_terreno'], ['Área Terreno'], ['Matricula'], ['Dirección']];
+        var datostablas = [['Usuario solicitante'], ['tipo'], ['Fecha de radicación'], ['t_id_lc_predio'], ['Número de radicado'], ['Estado']];
         var datosTable = [];
         var datauser = validacionusuarios();
-        /*var datoslcinteresados = select_query("SELECT t_id FROM valparaiso.lc_interesado where documento_identidad = '"+datauser[0][8]+"'");
-        var datoslcderecho = select_query("SELECT unidad FROM valparaiso.lc_derecho where interesado_lc_interesado = '"+datoslcinteresados+"'");
-        var datoslcpredio = [];
-        for(j = 0; j < datoslcderecho.length; j++) {
-            var resultado = select_query("SELECT * FROM valparaiso.lc_predio where t_id = '" + datoslcderecho[j][0] + "'");
-            datoslcpredio.push(resultado);
-        }
-        var coluebaunit = [];
-        for(l = 0; l < datoslcpredio.length; l++){
-          var resultado2 = select_query("SELECT ue_lc_terreno FROM valparaiso.col_uebaunit where baunit = '"+datoslcpredio[l][0][0]+"' and ue_lc_terreno is not null");
-          coluebaunit.push(resultado2); 
-        }
-        var lcterreno =[];
-        for(m = 0; m < datoslcpredio.length; m++){
-          var resultado3 = select_query("SELECT * FROM valparaiso.lc_terreno where t_id = '"+coluebaunit[0][0]+"'");
-          lcterreno.push(resultado3);
-        }*/
-
-        var sqlCompilada = select_query("SELECT lp.*, lt.* FROM valparaiso.lc_interesado li JOIN valparaiso.lc_derecho ld ON li.t_id = ld.interesado_lc_interesado JOIN valparaiso.lc_predio lp ON ld.unidad = lp.t_id JOIN valparaiso.col_uebaunit cu ON lp.t_id = cu.baunit JOIN valparaiso.lc_terreno lt ON cu.ue_lc_terreno = lt.t_id WHERE li.documento_identidad = '"+datauser[0][8]+"'");
-        //console.log(sqlCompilada);
+        
+        var sqlCompilada = select_query("SELECT * FROM mutacion_primera_clase");
+        
+       
         for(n =0; n < sqlCompilada.length; n++){
-          datosTable.push([sqlCompilada[n][8], sqlCompilada[n][26], sqlCompilada[n][28], sqlCompilada[n][7], sqlCompilada[n][21]]);  
+          datosTable.push([sqlCompilada[n][1], sqlCompilada[n][2], sqlCompilada[n][3], sqlCompilada[n][4], sqlCompilada[n][21], sqlCompilada[n][22]]);  
         }
         var select = datosTable;
         var filtro = "pendienteAprobacionembarazo";
@@ -3764,4 +3752,24 @@ function generarValorAleatorio() {
 function cerrarsesionT(){
   //eliminarCookies();
   window.location.href="../index.html";
+}
+
+function llenarDatosactuales(tidpredio){
+  /*var datoslcpredio = select_query("select * from valparaiso.lc_predio where t_id = '"+tidpredio+"'");
+  var lcderecho = select_query("select * from valparaiso.lc_derecho where unidad = '"+tidpredio+"'");
+  var lcinteresado = select_query("select * from valparaiso.lc_interesado where t_id = '"+lcderecho[0][6]+"'");
+  console.log(datoslcpredio);
+  console.log(lcderecho);
+  console.log(lcinteresado);*/
+  var datosActuales = select_query("SELECT lp.*, ld.*, li.* FROM valparaiso.lc_predio lp JOIN valparaiso.lc_derecho ld ON lp.t_id = ld.unidad JOIN valparaiso.lc_interesado li ON ld.interesado_lc_interesado = li.t_id WHERE lp.t_id = '"+tidpredio+"'");
+  //console.log(datosActuales);
+  document.getElementById('formcedula').value = datosActuales[0][43];
+  document.getElementById('formcolaborador').value = datosActuales[0][52];
+  document.getElementById('formnumeropredial').value = datosActuales[0][8];
+  document.getElementById('formmatricula').value = datosActuales[0][7];
+  document.getElementById('formnupre').value = datosActuales[0][13];
+  document.getElementById('formdireccion').value = datosActuales[0][21];
+  document.getElementById('formareaterreno').value = "m2";
+  document.getElementById('formdestinacioneco').value = datosActuales[0][18];
+  document.getElementById('forminiciotenencia').value = datosActuales[0][30];
 }
