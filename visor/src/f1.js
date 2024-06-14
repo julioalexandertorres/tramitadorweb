@@ -84,7 +84,7 @@ try{
               console.log(row[3]);
               var lcterreno = select_query("select ue_lc_terreno from valparaiso.col_uebaunit where baunit = "+row[3]+" and ue_lc_terreno is not null");
               //console.log(lcterreno);
-              window.open('http://127.0.0.1/tramitadorweb/visor/visor.html?prediosel='+lcterreno+'', '_blank');
+              window.open('visor.html?prediosel='+lcterreno+'', '_blank');
               //document.getElementById('visor').src = "visor.html?prediosel="+lcterreno+"";
               //$('#mostrarMapa').modal("show");
             },
